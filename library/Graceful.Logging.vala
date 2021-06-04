@@ -155,7 +155,7 @@ namespace Graceful.Logging
 	public void show_err_log(Gtk.Window parent, bool disable_log = true)
 	{
 
-		if (disable_log){
+		if (disable_log) {
 			err_log_disable();
 		}
 	}

@@ -23,19 +23,11 @@ graceful_daemon_libray_sources = [
   'TimeoutCounter.vala',
 ]
 
-graceful_daemon_libray_deps = [
-  dependency('gee-0.8'),
-  dependency('gio-2.0'),
-  dependency('glib-2.0'),
-  dependency('gtk+-3.0'),
-  dependency('gobject-2.0'),
-  dependency('gio-unix-2.0'),
-  dependency('json-glib-1.0'),
-
-  meson.get_compiler('vala').find_library('posix'),
-]
-
-static_library('graceful-daemon', graceful_daemon_libray_sources,
-  vala_args: '--target-glib=2.58',  dependencies: graceful_daemon_libray_deps,
+gd_lib = static_library('graceful-daemon', graceful_daemon_libray_sources,
+  vala_args: '--target-glib=2.58',  dependencies: graceful_daemon_common_deps,
   install: true,
+)
+
+graceful_daemon_libs = declare_dependency (link_with: gd_lib,
+  dependencies: graceful_daemon_common_deps,
 )

@@ -1,10 +1,11 @@
 graceful_daemon_sources = [
-  'main.vala',
+  'Main.vala',
+
+  #'Graceful.DBus.Daemon.vala',
 ]
 
 graceful_daemon_deps = [
-  dependency('glib-2.0'),
-  dependency('gobject-2.0'),
+  graceful_daemon_libs,
 ]
 
 executable('graceful-daemon', graceful_daemon_sources,

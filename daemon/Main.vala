@@ -27,8 +27,17 @@
  * authorization.
  */
 
-int main (string[] args)
-{
-	stdout.printf ("Hello World\n");
-	return 0;
+using GLib;
+
+using Graceful.Logging;
+
+public class Main : GLib.Object {
+
+
+    public static int main (string[] args)
+    {
+        log_debug("test");
+        stdout.printf ("Hello World\n");
+        return 0;
+    }
 }
