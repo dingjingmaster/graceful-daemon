@@ -2,6 +2,7 @@ graceful_daemon_sources = [
   'Main.vala',
 
   'Graceful.DBusDaemon.vala',
+  'Graceful.PluginManager.vala',
 ]
 
 graceful_daemon_deps = [

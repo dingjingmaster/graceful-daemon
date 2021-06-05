@@ -33,27 +33,27 @@ namespace Graceful.Logging
 
     using GLib.FileUtils;
     using GLib.DirUtils;
-	using Graceful.Misc;
+    using Graceful.Misc;
 
     public FileIOStream ios = null;
-	public DataOutputStream dos_log = null;
-	private string log_path;
-	public string err_log;
-	public bool LOG_ENABLE = true;
-	public bool LOG_TIMESTAMP = true;
-	public bool LOG_COLORS = true;
-	public bool LOG_DEBUG = true;
-	public bool LOG_COMMANDS = true;
+    public DataOutputStream dos_log = null;
+    private string log_path;
+    public string err_log;
+    public bool LOG_ENABLE = true;
+    public bool LOG_TIMESTAMP = true;
+    public bool LOG_COLORS = true;
+    public bool LOG_DEBUG = true;
+    public bool LOG_COMMANDS = true;
 
-    /**
+     /**
      * @brif 输出日志到文件 <需要主函数里调用>
      * @param logDir 日志输出文件夹名
      * @param logFile 日志输出文件名
       */
-	public void log_init (string logDir, string logFile)
-	{
-	    string log_path = string.join("/", logDir, logFile);
-	    try {
+     public void log_init (string logDir, string logFile)
+     {
+        string log_path = string.join("/", logDir, logFile);
+        try {
 	        create_with_parents (logDir, 0777);
 	        File file = File.new_for_path (log_path);
 	        if (FileUtils.test(log_path, FileTest.EXISTS)) {
@@ -63,10 +63,10 @@ namespace Graceful.Logging
 	        dos_log = new DataOutputStream (ios.output_stream);
 	    } catch (Error e) {
 	        stderr.printf (_("create log file error:%s"), e.message);
-	    }
+	     }
 	}
 
-	public void log_msg (string message, bool highlight = true)
+    public void log_msg (string message, bool highlight = true)
 	{
 		if (!LOG_ENABLE) { return; }
 

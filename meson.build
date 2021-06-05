@@ -5,12 +5,20 @@ project('graceful-daemon', ['c', 'vala'],
                    ],
 )
 
+IS_DEBUG=true
+
 i18n = import('i18n')
 
 add_project_arguments(
   '-X',
   '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
   language: 'c')
+
+if IS_DEBUG
+add_project_arguments('-X', '-DDEBUG', language: 'c')
+else
+add_project_arguments('-X', '-DRELEASE', language: 'c')
+endif
 
 i18n.gettext(meson.project_name(),
     args: '--directory=' + meson.source_root()
@@ -29,6 +37,10 @@ graceful_daemon_common_deps = [
   meson.get_compiler('vala').find_library('posix'),
 ]
 
+#subproject('daemon')
+#subproject('plugins')
+
 subdir('library')
+subdir('plugins')
 subdir('daemon')
 

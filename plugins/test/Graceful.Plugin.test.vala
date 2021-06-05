@@ -1,4 +1,4 @@
-/* Graceful.Plugin.Interface.vala
+/* Graceful.PluginManager.vala
  *
  * Copyright 2021 dingjing
  *
@@ -27,22 +27,12 @@
  * authorization.
  */
 
+using Graceful;
+
 namespace Graceful
 {
-    public interface PluginInterface : GLib.Object
-    {
-        public abstract bool activate ();
-        public abstract bool deactivate ();
-        public abstract bool is_activate ();
-        public abstract bool is_available ();
 
-        public abstract string get_name ();
-        public abstract string get_description ();
-        public abstract string get_author ();
-        public abstract string get_website ();
-        public abstract string get_copyright ();
-        public abstract string get_location ();
+    public class Plugin.test : GLib.Object {
+
     }
 }
-
-

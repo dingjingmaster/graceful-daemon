@@ -1,4 +1,4 @@
-/* Graceful.Plugin.Interface.vala
+/* Graceful.PluginManager.vala
  *
  * Copyright 2021 dingjing
  *
@@ -27,21 +27,30 @@
  * authorization.
  */
 
-namespace Graceful
-{
-    public interface PluginInterface : GLib.Object
-    {
-        public abstract bool activate ();
-        public abstract bool deactivate ();
-        public abstract bool is_activate ();
-        public abstract bool is_available ();
+using Gee;
+using Graceful.Logging;
 
-        public abstract string get_name ();
-        public abstract string get_description ();
-        public abstract string get_author ();
-        public abstract string get_website ();
-        public abstract string get_copyright ();
-        public abstract string get_location ();
+namespace Graceful {
+
+    public class PluginManager : GLib.Object {
+        private static Gee.List<PluginInterface*>       mPlugins;
+        private static GLib.Once<PluginManager>         gInstance;
+
+        public static unowned PluginManager instance ()
+        {
+            info("测试iiiiiiiiiiiiiiiiiii");
+            return gInstance.once( () => {return new PluginManager();});
+        }
+
+        public void PluginManagerNew ()
+        {
+            info("测试iiiiiiiiiiiiiiiiiikkki");
+        }
+
+        public void loadPlugin ()
+        {
+        }
+
     }
 }
 

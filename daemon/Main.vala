@@ -27,27 +27,28 @@
  * authorization.
  */
 
-using GLib.Environment;
-
 using Graceful;
-using Graceful.Logging;
+using GLib.Environment;
+//using Graceful.Logging;
 
 public class Main : GLib.Object {
 
-
     public static int main (string[] args)
     {
-        string logDir = string.join ("/", get_home_dir (), ".config/", "graceful-daemon");
-        log_init (logDir, "graceful-daemon.log");
+        //string logDir = string.join ("/", get_home_dir (), ".config/", "graceful-daemon");
+        //log_init (logDir, "graceful-daemon.log");
+        log ("graceful-daemon", LogLevelFlags.LEVEL_DEBUG, Log.FILE);
 
-        log_debug("test");
-        log_debug("test");
-        log_debug("test");
-        log_debug("test");
+            // 解析命令行
+
+            // 根据命令行选择运行模式
+            PluginManager* pluginManager = PluginManager.instance();
+
+            // 开始加载插件
 
         Bus.own_name (BusType.SESSION, "com.dingjing.graceful.daemon", BusNameOwnerFlags.NONE,
                         on_bus_aquired, () => {},
-                        () => stderr.printf ("Could not aquire name\n"));
+                        () => stderr.printf (_("Could not aquire name\n")));
 
         new MainLoop().run();
 
@@ -60,7 +61,7 @@ void on_bus_aquired (DBusConnection conn)
     try {
         conn.register_object ("/com/dingjing/graceful/daemon", new Graceful.DBusDaemon ());
     } catch (IOError e) {
-    log_error (_("The process has been started and does not need to be executed again!"));
-        stderr.printf ("Could not register service\n");
+        //log_error (_("The process has been started and does not need to be executed again!"));
+        stderr.printf (_("Could not register service\n"));
     }
 }
