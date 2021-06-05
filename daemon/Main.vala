@@ -27,6 +27,8 @@
  * authorization.
  */
 
+using GLib.Environment;
+
 using Graceful;
 using Graceful.Logging;
 
@@ -35,6 +37,12 @@ public class Main : GLib.Object {
 
     public static int main (string[] args)
     {
+        string logDir = string.join ("/", get_home_dir (), ".config/", "graceful-daemon");
+        log_init (logDir, "graceful-daemon.log");
+
+        log_debug("test");
+        log_debug("test");
+        log_debug("test");
         log_debug("test");
 
         Bus.own_name (BusType.SESSION, "com.dingjing.graceful.daemon", BusNameOwnerFlags.NONE,
@@ -52,6 +60,7 @@ void on_bus_aquired (DBusConnection conn)
     try {
         conn.register_object ("/com/dingjing/graceful/daemon", new Graceful.DBusDaemon ());
     } catch (IOError e) {
+    log_error (_("The process has been started and does not need to be executed again!"));
         stderr.printf ("Could not register service\n");
     }
 }

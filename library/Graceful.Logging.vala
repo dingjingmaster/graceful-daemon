@@ -26,24 +26,48 @@
  * use or other dealings in this Software without prior written
  * authorization.
  */
+
 namespace Graceful.Logging
 {
-
 	/* Functions for logging messages to console and log files */
 
+    using GLib.FileUtils;
+    using GLib.DirUtils;
 	using Graceful.Misc;
 
-	public DataOutputStream dos_log;
+    public FileIOStream ios = null;
+	public DataOutputStream dos_log = null;
+	private string log_path;
 	public string err_log;
 	public bool LOG_ENABLE = true;
-	public bool LOG_TIMESTAMP = false;
+	public bool LOG_TIMESTAMP = true;
 	public bool LOG_COLORS = true;
-	public bool LOG_DEBUG = false;
-	public bool LOG_COMMANDS = false;
+	public bool LOG_DEBUG = true;
+	public bool LOG_COMMANDS = true;
+
+    /**
+     * @brif 输出日志到文件 <需要主函数里调用>
+     * @param logDir 日志输出文件夹名
+     * @param logFile 日志输出文件名
+      */
+	public void log_init (string logDir, string logFile)
+	{
+	    string log_path = string.join("/", logDir, logFile);
+	    try {
+	        create_with_parents (logDir, 0777);
+	        File file = File.new_for_path (log_path);
+	        if (FileUtils.test(log_path, FileTest.EXISTS)) {
+	            FileUtils.remove (log_path);
+	            }
+	        ios = file.create_readwrite (FileCreateFlags.NONE);
+	        dos_log = new DataOutputStream (ios.output_stream);
+	    } catch (Error e) {
+	        stderr.printf (_("create log file error:%s"), e.message);
+	    }
+	}
 
 	public void log_msg (string message, bool highlight = true)
 	{
-
 		if (!LOG_ENABLE) { return; }
 
 		string msg = "";
@@ -78,7 +102,6 @@ namespace Graceful.Logging
 
 	public void log_error (string message, bool highlight = false, bool is_warning = false)
 	{
-
 		if (!LOG_ENABLE) { return; }
 
 		string msg = "";
@@ -121,18 +144,12 @@ namespace Graceful.Logging
 
 	public void log_debug (string message)
 	{
-		if (!LOG_ENABLE) { return; }
-
-		if (LOG_DEBUG){
-			log_msg ("D: " + message);
+		if (!LOG_ENABLE) {
+		    return;
 		}
 
-		try {
-			if (dos_log != null){
-				dos_log.put_string ("[%s] %s\n".printf(timestamp(), message));
-			}
-		} catch (Error e) {
-			stdout.printf (e.message);
+		if (LOG_DEBUG) {
+			log_msg ("D: " + message);
 		}
 	}
 
