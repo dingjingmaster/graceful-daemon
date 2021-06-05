@@ -26,3 +26,20 @@
  * use or other dealings in this Software without prior written
  * authorization.
  */
+
+namespace Graceful
+{
+    [DBus (name = "com.dingjing.graceful.daemon")]
+    public class DBusDaemon : Object {
+        private int test;
+
+        public int start () {
+            return 0;
+        }
+
+        public int stop () {
+            return 0;
+        }
+
+    }
+}

@@ -1,4 +1,4 @@
-/* main.vala
+/* Graceful.Plugin.Interface.vala
  *
  * Copyright 2021 dingjing
  *
@@ -27,31 +27,22 @@
  * authorization.
  */
 
-using Graceful;
-using Graceful.Logging;
-
-public class Main : GLib.Object {
-
-
-    public static int main (string[] args)
-    {
-        log_debug("test");
-
-        Bus.own_name (BusType.SESSION, "com.dingjing.graceful.daemon", BusNameOwnerFlags.NONE,
-                        on_bus_aquired, () => {},
-                        () => stderr.printf ("Could not aquire name\n"));
-
-        new MainLoop().run();
-
-        return 0;
-    }
-}
-
-void on_bus_aquired (DBusConnection conn)
+namespace Graceful
 {
-    try {
-        conn.register_object ("/com/dingjing/graceful/daemon", new Graceful.DBusDaemon ());
-    } catch (IOError e) {
-        stderr.printf ("Could not register service\n");
+    interface PluginInterface : Object
+    {
+        public abstract bool activate ();
+        public abstract bool deactivate ();
+        public abstract bool is_activate ();
+        public abstract bool is_available ();
+
+        public abstract string get_name ();
+        public abstract string get_description ();
+        public abstract string get_author ();
+        public abstract string get_website ();
+        public abstract string get_copyright ();
+        public abstract string get_location ();
     }
 }
+
+

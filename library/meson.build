@@ -6,6 +6,7 @@ graceful_daemon_libray_sources = [
   'Graceful.Logging.vala',
   'Graceful.Process.vala',
   'Graceful.FileSystem.vala',
+  'Graceful.Plugin.Interface.vala',
 
   'Device.vala',
   'CronTab.vala',

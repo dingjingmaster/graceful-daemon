@@ -1,7 +1,7 @@
 graceful_daemon_sources = [
   'Main.vala',
 
-  #'Graceful.DBus.Daemon.vala',
+  'Graceful.DBusDaemon.vala',
 ]
 
 graceful_daemon_deps = [
