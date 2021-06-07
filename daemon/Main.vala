@@ -29,15 +29,15 @@
 
 using Graceful;
 using GLib.Environment;
-//using Graceful.Logging;
+using Graceful.Logging;
 
 public class Main : GLib.Object {
 
     public static int main (string[] args)
     {
-        //string logDir = string.join ("/", get_home_dir (), ".config/", "graceful-daemon");
-        //log_init (logDir, "graceful-daemon.log");
-        log ("graceful-daemon", LogLevelFlags.LEVEL_DEBUG, Log.FILE);
+        string logDir = string.join ("/", get_home_dir (), ".config/", "graceful-daemon");
+        log_init (logDir, "graceful-daemon.log");
+        log_debug ("graceful-daemon");
 
             // 解析命令行
 
@@ -61,7 +61,7 @@ void on_bus_aquired (DBusConnection conn)
     try {
         conn.register_object ("/com/dingjing/graceful/daemon", new Graceful.DBusDaemon ());
     } catch (IOError e) {
-        //log_error (_("The process has been started and does not need to be executed again!"));
+        log_error (_("The process has been started and does not need to be executed again!"));
         stderr.printf (_("Could not register service\n"));
     }
 }

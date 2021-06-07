@@ -54,21 +54,24 @@ namespace Graceful.Logging
      {
         string log_path = string.join("/", logDir, logFile);
         try {
-	        create_with_parents (logDir, 0777);
-	        File file = File.new_for_path (log_path);
-	        if (FileUtils.test(log_path, FileTest.EXISTS)) {
-	            FileUtils.remove (log_path);
-	            }
-	        ios = file.create_readwrite (FileCreateFlags.NONE);
-	        dos_log = new DataOutputStream (ios.output_stream);
-	    } catch (Error e) {
-	        stderr.printf (_("create log file error:%s"), e.message);
-	     }
-	}
+            if (!FileUtils.test(logDir, FileTest.EXISTS)) {
+                create_with_parents (logDir, 0777);
+            }
+            File file = File.new_for_path (log_path);
+            if (FileUtils.test(log_path, FileTest.EXISTS)) {
+                ios = file.open_readwrite ();
+            } else {
+                ios = file.create_readwrite (FileCreateFlags.NONE);
+            }
+            dos_log = new DataOutputStream (ios.output_stream);
+        } catch (Error e) {
+            stderr.printf (_("create log file error:%s"), e.message);
+         }
+    }
 
     public void log_msg (string message, bool highlight = true)
-	{
-		if (!LOG_ENABLE) { return; }
+    {
+        if (!LOG_ENABLE) { return; }
 
 		string msg = "";
 
@@ -169,13 +172,13 @@ namespace Graceful.Logging
 		log_msg(string.nfill(70,'='));
 	}
 
-	public void show_err_log(Gtk.Window parent, bool disable_log = true)
-	{
+	//public void show_err_log(Gtk.Window parent, bool disable_log = true)
+	//{
 
-		if (disable_log) {
-			err_log_disable();
-		}
-	}
+	//	if (disable_log) {
+	//		err_log_disable();
+	//	}
+	//}
 
 	public void err_log_clear()
 	{

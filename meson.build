@@ -15,9 +15,9 @@ add_project_arguments(
   language: 'c')
 
 if IS_DEBUG
-add_project_arguments('-X', '-DDEBUG', language: 'c')
+add_project_arguments('-X', '-DDEBUG=1', language: 'c')
 else
-add_project_arguments('-X', '-DRELEASE', language: 'c')
+add_project_arguments('-X', '-DRELEASE=1', language: 'c')
 endif
 
 i18n.gettext(meson.project_name(),

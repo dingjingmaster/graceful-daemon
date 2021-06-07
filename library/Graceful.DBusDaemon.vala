@@ -1,4 +1,4 @@
-/* Graceful.PluginManager.vala
+/* Graceful.DBus.Daemon.vala
  *
  * Copyright 2021 dingjing
  *
@@ -27,41 +27,19 @@
  * authorization.
  */
 
-using Gee;
-using Graceful.Logging;
-using Graceful.PluginInterface;
+namespace Graceful
+{
+    [DBus (name = "com.dingjing.graceful.daemon")]
+    public class DBusDaemon : Object {
+        private int test;
 
-namespace Graceful {
-
-
-
-    public class PluginManager : GLib.Object {
-        private static Gee.List<PluginInterface*>       mPlugins;
-        private static GLib.Once<PluginManager>         gInstance;
-
-        public static unowned PluginManager instance ()
-        {
-            return gInstance.once( () => {return new PluginManager();});
+        public int start () {
+            return 0;
         }
 
-        public PluginManager ()
-        {
-        }
-
-        public void loadPlugin ()
-        {
-        #if DEBUG
-            string dirStr = "/data/code/build-graceful-daemon/plugins/";
-        #endif
-            Dir dir = Dir.open(dirStr, 0);
-            string? name = null;
-            while ((name = dir.read_name()) != null) {
-                string path = Path.build_filename (dirStr, name);
-                log_debug (path);
-                }
+        public int stop () {
+            return 0;
         }
 
     }
 }
-
-

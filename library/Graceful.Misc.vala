@@ -29,10 +29,9 @@
 
 namespace Graceful.Misc
 {
-
 	/* Various utility functions */
 
-	using Gtk;
+	//using Gtk;
 	using Graceful.Logging;
 	using Graceful.FileSystem;
 	using Graceful.ProcessHelper;

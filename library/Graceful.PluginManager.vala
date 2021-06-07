@@ -28,8 +28,8 @@
  */
 
 using Gee;
+using Graceful;
 using Graceful.Logging;
-using Graceful.PluginInterface;
 
 namespace Graceful {
 
@@ -50,9 +50,7 @@ namespace Graceful {
 
         public void loadPlugin ()
         {
-        #if DEBUG
             string dirStr = "/data/code/build-graceful-daemon/plugins/";
-        #endif
             Dir dir = Dir.open(dirStr, 0);
             string? name = null;
             while ((name = dir.read_name()) != null) {
